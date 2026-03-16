@@ -1,0 +1,17 @@
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Build outputs
+proxytool-linux-amd64
+proxytool-linux-arm64
+dist/
+
+# Go
+*.test
+*.out
+
+# IDE
+.vscode/
+.idea/

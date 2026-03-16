@@ -1,0 +1,44 @@
+name: build
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        go-version: ["1.21.x", "1.22.x", "1.23.x"]
+        arch: ["amd64", "arm64"]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: ${{ matrix.go-version }}
+          cache: true
+
+      - name: Build
+        env:
+          CGO_ENABLED: "0"
+          GOOS: linux
+          GOARCH: ${{ matrix.arch }}
+        run: |
+          go version
+          go mod download
+          go build -ldflags="-s -w" -o "proxytool-linux-${GOARCH}" .
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: proxytool-linux-${{ matrix.arch }}-go${{ matrix.go-version }}
+          path: proxytool-linux-${{ matrix.arch }}
