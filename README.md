@@ -28,6 +28,10 @@ chmod +x proxytool
 sudo mv proxytool /usr/local/bin/
 ```
 
+说明：
+- `releases/latest` 默认指向你最新的“正式版本（tag 为 v*）”。
+- 如果你想获取每次 push 自动生成的构建，请到 Release 页面下载 `Nightly`（tag 为 `nightly`）。
+
 ## 使用
 
 ### 1. 添加订阅
